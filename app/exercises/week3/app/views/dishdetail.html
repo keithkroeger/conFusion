@@ -1,0 +1,83 @@
+    <div class="container">
+        <div class="row row-content" data-ng-controller="DishDetailController as detailCtrl">
+            <div class="col-xs-12">
+                <button class="btn btn-xs btn-primary pull-right"
+                    type="button" ui-sref="app.menu">
+                    Back to Menu
+                </button>
+                <div class="media-left media-middle">
+                    <a href="#">
+                    <img class="media-object img-thumbnail"
+                     data-ng-src={{dish.image}} alt="{{dish.name}}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h2 class="media-heading">{{dish.name}}
+                     <span class="label label-danger">{{dish.label}}</span>
+                     <span class="badge">{{dish.price | currency}}</span></h2>
+                    <p>{{dish.description}}</p>
+                 </div>
+            </div>
+            <div class="col-xs-9 col-xs-offset-1">
+                <div class="media-body">
+	                <b>Customer Comments</b>
+	            	<span>Sort By:  <input type="text" data-ng-model="orderBy"></span>
+            	</div>
+            	
+                <ul class="media-list">
+	                <li class="media"  data-ng-repeat="comment in dish.comments | orderBy:orderBy">
+	                    <blockquote>
+	                        <p>{{comment.rating}} Stars</p>
+	                        <p>{{comment.comment}}</p>
+	                        <footer><cite>{{comment.author}}, {{comment.date | date}}</cite></footer>		
+	                    </blockquote>
+	                </li>
+	            </ul>
+            </div>
+            
+            <div class="col-xs-9 col-xs-offset-1" data-ng-controller="DishCommentController">
+                    <ul class="list-unstyled" data-ng-show="!commentForm.$invalid && !commentForm.$pristine">
+		                <li class="media">
+		                    <blockquote>
+		                        <p>{{comment.rating}} Stars</p>
+		                        <p>{{comment.comment}}</p>
+		                        <footer><cite>{{comment.author}}, {{comment.date | date}}</cite></footer>		
+		                    </blockquote>
+		                </li>
+                    </ul>
+                <form class="form-horizontal" name="commentForm"
+                		data-ng-submit="submitComment()" novalidate>
+                    <div class="form-group" data-ng-class="{ 'has-error' : commentForm.author.$error.required && !commentForm.author.$pristine }">
+                        <label for="author" class="col-sm-2 control-label">Your Name</label>
+                        <div class="col-sm-10">
+	                        <input type="text" class="form-control" id="author" name="author" placeholder="Enter Your Name"
+		                        data-ng-model="comment.author" required>
+                        </div>
+                        <span data-ng-show="commentForm.author.$error.required && !commentForm.author.$pristine" class="help-block">Your Name is required.</span>
+                    </div>
+					<div class="form-group">
+						<label for="stars" class="col-sm-2 control-label">Number of Stars</label>
+						<div class="radio col-sm-10" id="rating">
+							<label class="radio-inline"  data-ng-repeat="rate in ratingList">
+								<input type="radio" name="number" data-ng-value="{{rate.value}}" data-ng-model="comment.rating">{{rate.label}}
+							</label>
+						</div>
+					</div> 
+                    <div class="form-group" data-ng-class="{ 'has-error' : commentForm.comment.$error.required && !commentForm.comment.$pristine }">
+                        <label for="feedback" class="col-sm-2 control-label">Your Feedback</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="comment" name="comment" rows="12"
+                            	data-ng-model="comment.comment" required></textarea>
+                        </div>
+                        <span data-ng-show="commentForm.comment.$error.required && !commentForm.comment.$pristine" class="help-block">Comment is required.</span>
+                    </div> 
+					<p>Task 2: You need to validate that the user name and comments are entered</p>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" data-ng-disabled="commentForm.$invalid">Submit Comment</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
