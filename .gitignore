@@ -4,3 +4,4 @@ node_modules
 .tmp
 .tern-project
 .DS_Store
+/WebContent/

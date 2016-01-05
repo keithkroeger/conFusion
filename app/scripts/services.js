@@ -48,6 +48,6 @@ angular.module('confusionApp').constant("baseURL", "http://localhost:3000/")
 
 		.service('toolsFactory', function() {
 			this.getList = function() {
-				return [{"name":"one","url":"http://www.google.com"},{"name":"two","sref":"app.aboutus"}];
+				return [{"name":"one","url":"http://www.google.com"},{"name":"two","sref":"app.aboutus"},{"name":"three","url":"/help.html"}];
 				};
 			} );
